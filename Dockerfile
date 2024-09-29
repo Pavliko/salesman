@@ -29,7 +29,7 @@ WORKDIR /app
 #     appuser
 
 RUN apt update
-RUN apt install -y libpq-dev gcc
+RUN apt install -y libpq-dev gcc graphviz graphviz-dev
 
 # Download dependencies as a separate step to take advantage of Docker's caching.
 # Leverage a cache mount to /root/.cache/pip to speed up subsequent builds.
