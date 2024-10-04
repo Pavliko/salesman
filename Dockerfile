@@ -38,7 +38,8 @@ RUN apt install -y libpq-dev gcc graphviz graphviz-dev
 RUN pip install --upgrade pip
 RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=bind,source=requirements.txt,target=requirements.txt \
-    python -m pip install -r requirements.txt
+    pip install poetry && poetry install --no-root
+
 
 # Switch to the non-privileged user to run the application.
 # USER appuser
