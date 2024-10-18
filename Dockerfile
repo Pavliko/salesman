@@ -35,6 +35,8 @@ RUN apt install -y libpq-dev gcc graphviz graphviz-dev
 # Leverage a cache mount to /root/.cache/pip to speed up subsequent builds.
 # Leverage a bind mount to requirements.txt to avoid having to copy them into
 # into this layer.
+COPY pyproject.toml /app/
+COPY poetry.lock /app/
 RUN pip install --upgrade pip
 RUN pip install poetry && poetry install --no-root
 
@@ -49,4 +51,4 @@ COPY . .
 EXPOSE 8000
 
 # Run the application.
-CMD ["fastapi", "dev", "/app/app.py", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["poetry", "run", "fastapi", "dev", "/app/app.py", "--host", "0.0.0.0", "--port", "8000"]
