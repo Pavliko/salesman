@@ -36,9 +36,7 @@ RUN apt install -y libpq-dev gcc graphviz graphviz-dev
 # Leverage a bind mount to requirements.txt to avoid having to copy them into
 # into this layer.
 RUN pip install --upgrade pip
-RUN --mount=type=cache,target=/root/.cache/pip \
-    --mount=type=bind,source=requirements.txt,target=requirements.txt \
-    pip install poetry && poetry install --no-root
+RUN pip install poetry && poetry install --no-root
 
 
 # Switch to the non-privileged user to run the application.
