@@ -16,6 +16,7 @@ class Settings(BaseSettings):
     ozon_seller_token: Optional[str]
     ozon_performance_client_id: Optional[str]
     ozon_performance_token: Optional[str]
+    google_sheets_api_token: Optional[str]
     timezone: str = "Europe/Moscow"
 
     model_config = SettingsConfigDict(env_file="local.env", env_file_encoding="utf-8")
