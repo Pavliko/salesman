@@ -50,19 +50,22 @@ class OzonDRRReport:
 
     async def fill_missed_data(self, report, seller_client):
         sku_without_offer_id = list(report[report["offer_id"].isna()].index)
+        if sku_without_offer_id:
+            products = await seller_client.get_pruducts_by_sku(sku_without_offer_id)
 
-        products = await seller_client.get_pruducts_by_sku(sku_without_offer_id)
+            products = pd.DataFrame(
+                products, columns=["sku", "name", "offer_id", "price"]
+            )
+            products.set_index("sku", inplace=True)
 
-        products = pd.DataFrame(products, columns=["sku", "name", "offer_id", "price"])
-        products.set_index("sku", inplace=True)
+            products["price"] = products["price"].astype("float")
 
-        products["price"] = products["price"].astype("float")
+            report = report.fillna(products)
 
-        report = report.fillna(products)
+            del products
+
         report["currency_code"] = report["currency_code"].fillna("RUB")
         report = report.fillna(0)
-
-        del products
 
         return report
 

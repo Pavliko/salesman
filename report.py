@@ -12,8 +12,8 @@ logging.basicConfig(
     datefmt="%Y-%m-%d %H:%M:%S",  # Формат времени
 )
 
-since = datetime.strptime("2024-10-18", "%Y-%m-%d").date()
-to = datetime.strptime("2024-10-18", "%Y-%m-%d").date()
+since = datetime.strptime("2024-11-11", "%Y-%m-%d").date()
+to = datetime.strptime("2024-11-11", "%Y-%m-%d").date()
 
 
 async def main():
