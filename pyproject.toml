@@ -27,6 +27,7 @@ fastparquet = "^2024.5.0"
 pyarrow = "^17.0.0"
 gspread = "^6.1.3"
 gspread-formatting = "^1.2.0"
+certifi = "^2024.8.30"
 
 
 [build-system]

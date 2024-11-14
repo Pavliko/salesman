@@ -19,6 +19,9 @@ from services.ozon.performance.statistic_report import (
     OzonPerformanceStatisticsMethodsMixin,
 )
 
+import certifi
+import ssl
+
 
 class OzonPerformanceClient(
     OzonPerformanceCampaignsMixin, OzonPerformanceStatisticsMethodsMixin
@@ -87,8 +90,9 @@ class OzonPerformanceClient(
             "client_secret": self.token,
             "grant_type": "client_credentials",
         }
-
-        async with self.session.post("/api/client/token", json=json_body) as r:
+        
+        ssl_context = ssl.create_default_context(cafile=certifi.where())
+        async with self.session.post("/api/client/token", json=json_body, ssl=ssl_context) as r:
             response = await r.json()
             self.session_token = response["access_token"]
             self.session_token_type = response["token_type"]

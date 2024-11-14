@@ -9,6 +9,8 @@ from yarl import URL
 
 from db.session import get_session
 from models.ozon import OzonCampaigns, OzonCampaignsProducts
+import certifi
+import ssl
 
 
 class OzonPerformanceCampaignsMixin:
@@ -84,12 +86,14 @@ class OzonPerformanceCampaignsMixin:
         if self.session is None:
             raise RuntimeError("Session not started")
 
-        async with self.session.get(f"/api/client/campaign/{campaign_id}/objects") as r:
+        ssl_context = ssl.create_default_context(cafile=certifi.where())
+        async with self.session.get(f"/api/client/campaign/{campaign_id}/objects", ssl=ssl_context) as r:
             return await r.json()
 
     async def get_campaigns(self):
         if self.session is None:
             raise RuntimeError("Session not started")
 
-        async with self.session.get("/api/client/campaign?advObjectType=SKU") as r:
+        ssl_context = ssl.create_default_context(cafile=certifi.where())
+        async with self.session.get("/api/client/campaign?advObjectType=SKU", ssl=ssl_context) as r:
             return await r.json()
