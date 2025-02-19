@@ -59,6 +59,7 @@ class OzonDRRReport:
             products.set_index("id", inplace=True)
 
             products["price"] = products["price"].astype("float")
+            products["offer_id"] = products["offer_id"].astype(int)
 
             report = report.fillna(products)
 
