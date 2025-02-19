@@ -54,12 +54,11 @@ class OzonDRRReport:
             products = await seller_client.get_pruducts_by_sku(sku_without_offer_id)
 
             products = pd.DataFrame(
-                products, columns=["id", "name", "offer_id", "price"]
+                products, columns=["sku", "name", "offer_id", "price"]
             )
-            products.set_index("id", inplace=True)
+            products.set_index("sku", inplace=True)
 
             products["price"] = products["price"].astype("float")
-            products["offer_id"] = products["offer_id"].astype(int)
 
             report = report.fillna(products)
 
@@ -71,6 +70,7 @@ class OzonDRRReport:
         return report
 
     def prepare_data(self, report):
+
         report = report.drop(columns=["name", "currency_code", "campaign_id"])
         report = report.sort_values(by="offer_id")
         report["drr"] = report["moneySpent"] / report["profit"]

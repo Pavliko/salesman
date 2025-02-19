@@ -43,6 +43,11 @@ class OzonSellerClient:
 
         logging.info(f"Loaded missed skus({skus})")
 
+        for item in response.get("items", []):
+            sources = item.get("sources", [])
+            if sources:
+                item["sku"] = sources[-1]["sku"]
+
         return response["items"]
 
     async def get_posting_fbo_list(self, since: date, to: date):
