@@ -54,9 +54,9 @@ class OzonDRRReport:
             products = await seller_client.get_pruducts_by_sku(sku_without_offer_id)
 
             products = pd.DataFrame(
-                products, columns=["sku", "name", "offer_id", "price"]
+                products, columns=["id", "name", "offer_id", "price"]
             )
-            products.set_index("sku", inplace=True)
+            products.set_index("id", inplace=True)
 
             products["price"] = products["price"].astype("float")
 

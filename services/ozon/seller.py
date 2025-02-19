@@ -38,12 +38,12 @@ class OzonSellerClient:
 
         json_body = {"sku": skus}
 
-        async with self.session.post("/v2/product/info/list", json=json_body) as r:
+        async with self.session.post("/v3/product/info/list", json=json_body) as r:
             response = await r.json()
 
         logging.info(f"Loaded missed skus({skus})")
 
-        return response["result"]["items"]
+        return response["items"]
 
     async def get_posting_fbo_list(self, since: date, to: date):
         if self.session is None:
