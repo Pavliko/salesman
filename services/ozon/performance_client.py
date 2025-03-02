@@ -85,6 +85,8 @@ class OzonPerformanceClient(
             )
 
     async def refresh_session_token(self):
+        self.session_token_expired_at = None
+        
         json_body = {
             "client_id": self.client_id,
             "client_secret": self.token,
