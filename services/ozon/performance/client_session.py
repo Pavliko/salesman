@@ -15,7 +15,7 @@ class OzonPerformanceClientSession(aiohttp.ClientSession):
             self._token_manager.session_token_expired_at is not None
             and self._token_manager.session_token_expired_at < datetime.now()
         ):
-            await self._token_manager.refresh_token()
+            await self._token_manager.refresh_session_token()
 
         response = await super()._request(method, url, **kwargs)
 
